@@ -1,1 +1,4 @@
-# ISD-4.Semester-App-Entwichlung
+# ISD-4.Semester-App-Development
+# Project organisation App
+
+
