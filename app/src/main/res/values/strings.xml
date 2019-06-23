@@ -3,4 +3,14 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="textUsername">Username</string>
+    <string name="textEmail">E-Mail</string>
+    <string name="textPassword">Password</string>
+    <string name="textButtonSubmit">Submit</string>
+    <string name="textAlreadyUser">Already SignedUp?</string>
+    <string name="dashboardText">Dashboard</string>
+    <string name="homeText">Home</string>
+    <string name="notificationsText">Notifications</string>
 </resources>
