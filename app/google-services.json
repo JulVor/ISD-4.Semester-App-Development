@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "290489563496",
+    "firebase_url": "https://android-developmnet.firebaseio.com",
+    "project_id": "android-developmnet",
+    "storage_bucket": "android-developmnet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290489563496:android:4fc22b07661b6e7a",
+        "android_client_info": {
+          "package_name": "com.example.panplaner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290489563496-4t47pv6pvufeqr5r27r822nlrbi6hk57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1jmOPIYMUnqmb1qcn1Pq8GYk8Ttu8wQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290489563496-4t47pv6pvufeqr5r27r822nlrbi6hk57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
