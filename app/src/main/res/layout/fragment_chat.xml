@@ -9,6 +9,22 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="chat" android:background="@color/colorPrimaryDark"/>
+            android:text="chat" android:background="@color/colorPrimaryDark" tools:layout_editor_absoluteY="8dp"
+            tools:layout_editor_absoluteX="16dp"/>
+    <EditText
+            android:layout_width="298dp"
+            android:layout_height="52dp"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            tools:layout_editor_absoluteY="663dp" tools:layout_editor_absoluteX="16dp" android:id="@+id/editText3"/>
+    <Button
+            android:text="Button"
+            android:layout_width="72dp"
+            android:layout_height="54dp" tools:layout_editor_absoluteY="661dp"
+            tools:layout_editor_absoluteX="328dp" android:id="@+id/button2"/>
+    <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="376dp"
+            android:layout_height="626dp" tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
