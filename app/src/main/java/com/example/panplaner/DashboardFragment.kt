@@ -7,7 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
+import com.xwray.groupie.Item
+import kotlinx.android.synthetic.main.deadline_list_item.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,6 +51,12 @@ class DashboardFragment : Fragment() {
         listener = null
     }
 
+    private fun getProject(position: Int) {
+        val adapter = GroupAdapter<ViewHolder>()
+        val ref = FirebaseDatabase.getInstance().getReference("/Projects")
+            .child("${FirebaseAuth.getInstance().uid}").child("$position")
+
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -63,3 +74,18 @@ class DashboardFragment : Fragment() {
     }
 
 }
+class Deadline(val datum: String, val belongs_to: String, val description: String){
+    constructor(): this("", "", "")
+}
+
+class DeadlineItem(val deadline: Deadline?): Item<ViewHolder>(){
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.deadline_date.text = deadline?.datum
+        viewHolder.itemView.deadline_user.text = deadline?.belongs_to
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.deadline_list_item
+    }
+}
+
