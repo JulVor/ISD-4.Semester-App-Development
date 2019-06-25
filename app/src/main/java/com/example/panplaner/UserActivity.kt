@@ -36,6 +36,9 @@ class UserActivity : AppCompatActivity() {
                 replaceFragment(ChatFragment())
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.navigation_dokumente -> {
+                return@OnNavigationItemSelectedListener true
+            }
         }
         false
     }
