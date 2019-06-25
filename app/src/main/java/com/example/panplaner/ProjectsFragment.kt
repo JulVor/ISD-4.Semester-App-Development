@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.renderscript.Sampler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,22 +12,28 @@ import android.view.ViewGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import android.util.Log
+import android.app.PendingIntent.getActivity
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.android.synthetic.main.fragment_projects.*
+import kotlinx.android.synthetic.main.project_list_item.view.*
 
 
 class ProjectsFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     val frag = "ProjectsFragment"
-    var projects: ArrayList<Project> = ArrayList()
+
+    private lateinit var projectsRef: DatabaseReference
+
+    private var projectListener: ValueEventListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,34 +54,68 @@ class ProjectsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val uid = FirebaseAuth.getInstance().uid
+        projectsRef = FirebaseDatabase.getInstance().reference.child("/Projects")
+
+        val data = getProjects()
+        Log.d(frag, "$data")
         val adapter = GroupAdapter<ViewHolder>()
-        adapter.add(ProjectItem())
-        adapter.add(ProjectItem())
-        adapter.add(ProjectItem())
-        adapter.add(ProjectItem())
-        rv_projects.adapter = adapter
-        rv_projects.layoutManager = LinearLayoutManager(activity)
+        rv_projects.addOnItemTouchListener(RecyclerItemClickListener(context!!, rv_projects, object : RecyclerItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                Log.d(frag, "click")
+                val action = ProjectsFragmentDirections.actionProjectsFragmentToUserActivity()
+                findNavController().navigate(action)
+            }
+
+            override fun onItemLongClick(view: View?, position: Int) {
+
+            }
+        }))
+        rv_projects!!.adapter = adapter
+        rv_projects!!.layoutManager = LinearLayoutManager(activity)
         add_project_button.setOnClickListener {
             val action = ProjectsFragmentDirections.actionProjectsFragmentToCreateProjectFragment()
             findNavController().navigate(action)
         }
+
     }
+
+
+
+    private fun <T : RecyclerView.ViewHolder> T.listen(event: (position: Int, type: Int) -> Unit): T {
+        itemView.setOnClickListener {
+            Log.d(frag, "row clicked")
+            event.invoke(adapterPosition, itemViewType)
+        }
+        return this
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
-/*    val projectsListener = object : ValueEventListener {
-        override fun onDataChange(p0: DataSnapshot) {
-            val project = p0.getValue()
-        }
-    }
-*/
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
     }
-
+    private fun getProjects() {
+        val adapter = GroupAdapter<ViewHolder>()
+        val ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}")
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                p0.children.forEach{
+                    val project = it.getValue(Project::class.java)
+                    adapter.add(ProjectItem(project))
+                    Log.d(frag, it.toString())
+                }
+                rv_projects.adapter = adapter
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                Log.d(frag, "cancelled")
+            }
+        })
+    }
 
 
     override fun onDetach() {
@@ -89,8 +130,9 @@ class ProjectsFragment : Fragment() {
 
 }
 
-class ProjectItem: Item<ViewHolder>() {
+class ProjectItem(val project: Project?): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
+        viewHolder.itemView.textView2.text = project?.name
     }
 
     override fun getLayout(): Int {
