@@ -14,4 +14,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="button_delete">Delete</string>
+    <string name="label_dashboard_deadline">Next Deadline</string>
+    <string name="label_dashboard_members">Members</string>
 </resources>
