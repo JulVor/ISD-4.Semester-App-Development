@@ -22,6 +22,7 @@ class LogInFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+        Log.d(frag, "$auth.uid")
     }
 
     override fun onCreateView(
@@ -35,8 +36,6 @@ class LogInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -46,6 +45,8 @@ class LogInFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         Log.d(frag, "onAttach")
+        auth = FirebaseAuth.getInstance()
+        Log.d(frag, "$auth.uid")
         super.onAttach(context)
     }
 
@@ -80,6 +81,7 @@ class LogInFragment : Fragment() {
                         startActivity(intent)*/
                     } else {
                         Log.w(frag, "failure")
+                        Toast.makeText(activity, "Wrong credentials supplied!", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
