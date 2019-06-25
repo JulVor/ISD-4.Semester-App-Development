@@ -25,7 +25,6 @@ class UserActivity : AppCompatActivity() {
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                replaceFragment(ProjectsFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
@@ -61,8 +60,7 @@ class UserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_top_new_project -> {
-                replaceFragment(createProjectFragment())
-            }
+             }
             R.id.menu_top_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, MainActivity::class.java)
@@ -79,7 +77,6 @@ class UserActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
-        replaceFragment(ProjectsFragment())
         Log.d(frag, user?.uid)
     }
     private fun loadProjects() {

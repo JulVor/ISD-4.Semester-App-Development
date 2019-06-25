@@ -42,11 +42,11 @@ class createProjectFragment : Fragment() {
     private fun saveProjectToDatabase() {
         val user = FirebaseAuth.getInstance().uid ?: ""
         val uID = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Projects/$uID")
+        val ref = FirebaseDatabase.getInstance().getReference("/Projects/$user/$uID")
         val project = Project(uID, user, editTextProjectName.text.toString(), editDeadline.text.toString(), editTextUser.text.toString())
         ref.setValue(project)
             .addOnSuccessListener {
-                Log.d(frag, "Project ${editTextProjectName.text.toString()} created")
+                Log.d(frag, "Project created")
             }
     }
     // TODO: Rename method, update argument and hook method into UI event
@@ -81,4 +81,6 @@ class createProjectFragment : Fragment() {
 
 }
 
-class Project(val uid: String, val creator: String, val name: String,val deadline: String, val users: String)
+class Project(val uid: String, val creator: String, val name: String,val deadline: String, val users: String) {
+    constructor(): this("", "", "", "", "")
+}
