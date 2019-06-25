@@ -7,6 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.fragment_dashboard.*
+import kotlinx.android.synthetic.main.project_list_item.view.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,6 +35,14 @@ class ChatFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val adapter = GroupAdapter<ViewHolder>()
+
+        adapter.add(ChatItem())
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -62,4 +75,13 @@ class ChatFragment : Fragment() {
         fun onFragmentInteraction(uri: Uri)
     }
 
+}
+
+class ChatItem(val project: Project?): Item<ViewHolder>() {
+    override fun bind(viewHolder: ViewHolder, position: Int) {
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.chat_message_row
+    }
 }
