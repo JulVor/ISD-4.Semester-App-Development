@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
-            app:startDestination="@id/signUpFragment">
+            app:startDestination="@id/logInFragment">
 
     <fragment android:id="@+id/signUpFragment" android:name="com.example.panplaner.SignUpFragment"
               android:label="fragment_sign_up" tools:layout="@layout/fragment_sign_up">
@@ -24,5 +24,13 @@
     <fragment android:id="@+id/dashboardFragment" android:name="com.example.panplaner.DashboardFragment"
               android:label="fragment_dashboard" tools:layout="@layout/fragment_dashboard"/>
     <fragment android:id="@+id/projectsFragment" android:name="com.example.panplaner.ProjectsFragment"
-              android:label="fragment_projects" tools:layout="@layout/fragment_projects"/>
+              android:label="fragment_projects" tools:layout="@layout/fragment_projects">
+        <action android:id="@+id/action_projectsFragment_to_createProjectFragment"
+                app:destination="@id/createProjectFragment"/>
+    </fragment>
+    <fragment android:id="@+id/createProjectFragment" android:name="com.example.panplaner.createProjectFragment"
+              android:label="fragment_create_project" tools:layout="@layout/fragment_create_project">
+        <action android:id="@+id/action_createProjectFragment_to_projectsFragment"
+                app:destination="@id/projectsFragment"/>
+    </fragment>
 </navigation>

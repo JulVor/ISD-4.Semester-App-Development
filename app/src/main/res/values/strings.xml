@@ -6,7 +6,11 @@
     <string name="hintUsername">Username</string>
     <string name="hintEmail">Email</string>
     <string name="hintPassword">Password</string>
+    <string name="textProjects">ProjectName</string>
     <string name="title_activity_user">UserActivity</string>
+    <string name="textProjectName">Name of the project</string>
+    <string name="textDeadline">Select deadline</string>
+    <string name="textAddUserToProject">Add another user to your project</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

@@ -1,6 +1,7 @@
 package com.example.panplaner
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -54,6 +55,7 @@ class LogInFragment : Fragment() {
             Log.d(frag, "text clicked")
             val action = LogInFragmentDirections.actionLogInFragmentToSignUpFragment()
             findNavController().navigate(action)
+
         }
         buttonLogIn.setOnClickListener{
             Log.d(frag, "button clicked")
@@ -68,9 +70,10 @@ class LogInFragment : Fragment() {
                     if(task.isSuccessful){
                         Log.d(frag, "success")
                         val user = auth.currentUser
-                        Log.d(frag, user.toString())
-                        val action = LogInFragmentDirections.actionLogInFragmentToUserActivity()
-                        findNavController().navigate(action)
+                        Log.d(frag, user?.uid)
+                        val intent = Intent(activity, UserActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
                     } else {
                         Log.w(frag, "failure")
                     }
