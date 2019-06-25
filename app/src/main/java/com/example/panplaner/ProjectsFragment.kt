@@ -1,10 +1,8 @@
 package com.example.panplaner
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.renderscript.Sampler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,17 +10,12 @@ import android.view.ViewGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import android.util.Log
-import android.app.PendingIntent.getActivity
-import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.Item
-import kotlinx.android.synthetic.main.activity_user.*
 import kotlinx.android.synthetic.main.fragment_projects.*
 import kotlinx.android.synthetic.main.project_list_item.view.*
 
@@ -63,6 +56,8 @@ class ProjectsFragment : Fragment() {
         rv_projects.addOnItemTouchListener(RecyclerItemClickListener(context!!, rv_projects, object : RecyclerItemClickListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 Log.d(frag, "click")
+                Log.d(frag, "$position")
+                Log.d(frag, "$rv_projects")
                 val action = ProjectsFragmentDirections.actionProjectsFragmentToUserActivity()
                 findNavController().navigate(action)
             }

@@ -24,9 +24,6 @@ class UserActivity : AppCompatActivity() {
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_home -> {
-                return@OnNavigationItemSelectedListener true
-            }
             R.id.navigation_dashboard -> {
                 replaceFragment(DashboardFragment())
                 return@OnNavigationItemSelectedListener true
@@ -47,6 +44,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user)
         auth = FirebaseAuth.getInstance()
         checkForUser()
+        replaceFragment(DashboardFragment())
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         database = FirebaseDatabase.getInstance()
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
@@ -60,6 +58,7 @@ class UserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_top_new_project -> {
+                replaceFragment(createProjectFragment())
              }
             R.id.menu_top_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
