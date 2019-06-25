@@ -16,11 +16,18 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_user.*
 
-class UserActivity : AppCompatActivity() {
+class UserActivity(obj: Project?) : AppCompatActivity() {
+    constructor(): this(Project())
     val frag = "UserActivity"
     private lateinit var textMessage: TextView
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+    var project: Project?
+    init {
+        Log.d(frag, "init")
+        project = obj
+        Log.d(frag, "${project?.name.toString()}" )
+    }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -44,6 +51,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user)
         auth = FirebaseAuth.getInstance()
         checkForUser()
+        Log.d(frag, "${project?.name}")
         replaceFragment(DashboardFragment())
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         database = FirebaseDatabase.getInstance()
@@ -77,11 +85,6 @@ class UserActivity : AppCompatActivity() {
             startActivity(intent)
         }
         Log.d(frag, user?.uid)
-    }
-    private fun loadProjects() {
-        var uid = FirebaseAuth.getInstance().uid ?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("/Projcets/$uid")
-
     }
 
     private fun replaceFragment(fragment: Fragment){

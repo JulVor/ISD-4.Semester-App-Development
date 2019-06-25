@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.xwray.groupie.GroupAdapter
+import android.content.Intent
 import com.xwray.groupie.ViewHolder
 import android.util.Log
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.xwray.groupie.Item
+import com.xwray.groupie.OnItemClickListener
 import kotlinx.android.synthetic.main.fragment_projects.*
 import kotlinx.android.synthetic.main.project_list_item.view.*
 
@@ -50,24 +52,7 @@ class ProjectsFragment : Fragment() {
         val uid = FirebaseAuth.getInstance().uid
         projectsRef = FirebaseDatabase.getInstance().reference.child("/Projects")
 
-        val data = getProjects()
-        Log.d(frag, "$data")
-        val adapter = GroupAdapter<ViewHolder>()
-        rv_projects.addOnItemTouchListener(RecyclerItemClickListener(context!!, rv_projects, object : RecyclerItemClickListener.OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                Log.d(frag, "click")
-                Log.d(frag, "$position")
-                Log.d(frag, "$rv_projects")
-                val action = ProjectsFragmentDirections.actionProjectsFragmentToUserActivity()
-                findNavController().navigate(action)
-            }
-
-            override fun onItemLongClick(view: View?, position: Int) {
-
-            }
-        }))
-        rv_projects!!.adapter = adapter
-        rv_projects!!.layoutManager = LinearLayoutManager(activity)
+        val data = loadProjects()
         add_project_button.setOnClickListener {
             val action = ProjectsFragmentDirections.actionProjectsFragmentToCreateProjectFragment()
             findNavController().navigate(action)
@@ -93,6 +78,36 @@ class ProjectsFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
+    }
+
+    private fun loadProjects(){
+        rv_projects.apply {
+            layoutManager = LinearLayoutManager(this@ProjectsFragment.context)
+            val adapter = GroupAdapter<ViewHolder>()
+            adapter.apply {
+                val ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}")
+                ref.addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(p0: DataSnapshot) {
+                        p0.children.forEach{
+                            val project = it.getValue(Project::class.java)
+                            adapter.add(ProjectItem(project))
+                            setOnItemClickListener(onItemClick)
+                        }
+                        rv_projects.adapter = adapter
+                    }
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+                })
+            }
+        }
+    }
+    private val onItemClick = OnItemClickListener { item, view ->
+        if(item is ProjectItem){
+            Log.d(frag, "clicked ${item.project?.name.toString()}")
+            val intent = Intent(context, UserActivity(item.project)::class.java)
+            startActivity(intent)
+        }
     }
     private fun getProjects() {
         val adapter = GroupAdapter<ViewHolder>()
