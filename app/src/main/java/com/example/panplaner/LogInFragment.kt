@@ -71,9 +71,13 @@ class LogInFragment : Fragment() {
                         Log.d(frag, "success")
                         val user = auth.currentUser
                         Log.d(frag, user?.uid)
+                        val action = LogInFragmentDirections.actionLogInFragmentToProjectsFragment()
+                        findNavController().navigate(action)
+
+                        /*
                         val intent = Intent(activity, UserActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
+                        startActivity(intent)*/
                     } else {
                         Log.w(frag, "failure")
                     }
