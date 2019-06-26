@@ -16,9 +16,6 @@
     <argument
             android:name="emailFromSignUp"
             app:argType="string"/>
-    <activity android:id="@+id/userActivity" android:name="com.example.panplaner.UserActivity"
-              android:label="activity_user" tools:layout="@layout/activity_user" app:data="user"
-              app:action="loginToUserActivity"/>
     <fragment android:id="@+id/chatFragment" android:name="com.example.panplaner.ChatFragment"
               android:label="fragment_chat" tools:layout="@layout/fragment_chat"/>
     <fragment android:id="@+id/dashboardFragment" android:name="com.example.panplaner.DashboardFragment"
@@ -27,11 +24,18 @@
               android:label="fragment_projects" tools:layout="@layout/fragment_projects">
         <action android:id="@+id/action_projectsFragment_to_createProjectFragment"
                 app:destination="@id/createProjectFragment"/>
-        <action android:id="@+id/action_projectsFragment_to_userActivity" app:destination="@id/userActivity"/>
+        <action android:id="@+id/action_projectsFragment_to_userActivity" app:destination="@id/user_nav_graph"/>
     </fragment>
     <fragment android:id="@+id/createProjectFragment" android:name="com.example.panplaner.createProjectFragment"
               android:label="fragment_create_project" tools:layout="@layout/fragment_create_project">
         <action android:id="@+id/action_createProjectFragment_to_projectsFragment"
                 app:destination="@id/projectsFragment"/>
     </fragment>
+    <navigation android:id="@+id/user_nav_graph" app:startDestination="@id/userActivity">
+        <activity android:id="@+id/userActivity" android:name="com.example.panplaner.UserActivity"
+                      android:label="activity_user" tools:layout="@layout/activity_user" app:data="user"
+                      app:action="loginToUserActivity"/>
+        <action android:id="@+id/action_global_dashboardFragment" app:destination="@id/dashboardFragment"/>
+        <action android:id="@+id/action_global_chatFragment" app:destination="@id/chatFragment"/>
+    </navigation>
 </navigation>

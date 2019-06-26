@@ -80,7 +80,3 @@ class createProjectFragment : Fragment() {
     }
 
 }
-
-class Project(val uid: String, val creator: String, val name: String,val deadline: String, val users: String) {
-    constructor(): this("", "", "", "", "")
-}

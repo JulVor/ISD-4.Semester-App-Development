@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.xwray.groupie.GroupAdapter
 import android.content.Intent
+import android.os.Parcel
+import android.os.Parcelable
 import com.xwray.groupie.ViewHolder
 import android.util.Log
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,17 +63,6 @@ class ProjectsFragment : Fragment() {
 
     }
 
-
-
-    private fun <T : RecyclerView.ViewHolder> T.listen(event: (position: Int, type: Int) -> Unit): T {
-        itemView.setOnClickListener {
-            Log.d(frag, "row clicked")
-            event.invoke(adapterPosition, itemViewType)
-        }
-        return this
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -88,6 +80,7 @@ class ProjectsFragment : Fragment() {
                 val ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}")
                 ref.addListenerForSingleValueEvent(object: ValueEventListener {
                     override fun onDataChange(p0: DataSnapshot) {
+                        Log.d(frag, "$p0")
                         p0.children.forEach{
                             val project = it.getValue(Project::class.java)
                             adapter.add(ProjectItem(project))
@@ -96,7 +89,7 @@ class ProjectsFragment : Fragment() {
                         rv_projects.adapter = adapter
                     }
                     override fun onCancelled(p0: DatabaseError) {
-
+                        Toast.makeText(activity, "somethin went wrong...", Toast.LENGTH_SHORT).show()
                     }
                 })
             }
@@ -104,29 +97,27 @@ class ProjectsFragment : Fragment() {
     }
     private val onItemClick = OnItemClickListener { item, view ->
         if(item is ProjectItem){
+
             Log.d(frag, "clicked ${item.project?.name.toString()}")
-            val intent = Intent(context, UserActivity(item.project)::class.java)
+            Log.d(frag, "clicked ${item.project?.uid.toString()}")
+            Log.d(frag, "clicked ${item.project?.creator.toString()}")
+            Log.d(frag, "clicked ${item.project?.deadline.toString()}")
+            val intent = Intent(context, UserActivity::class.java)
+
+            /*var data:MutableList<ProjectItem> = ArrayList<ProjectItem>()
+            data.add(item)
+            for (item in data) {
+                Log.d(frag, "$item")
+            }
+            intent.putParcelableArrayListExtra("project", data as java.util.ArrayList<out Parcelable>)
+            */
+            intent.putExtra("projectName",item.project?.name)
+            intent.putExtra("projectUid",item.project?.uid)
+            intent.putExtra("projectDeadline",item.project?.deadline)
+            intent.putExtra("projectUsers", item.project?.users)
             startActivity(intent)
         }
     }
-    private fun getProjects() {
-        val adapter = GroupAdapter<ViewHolder>()
-        val ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}")
-        ref.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onDataChange(p0: DataSnapshot) {
-                p0.children.forEach{
-                    val project = it.getValue(Project::class.java)
-                    adapter.add(ProjectItem(project))
-                    Log.d(frag, it.toString())
-                }
-                rv_projects.adapter = adapter
-            }
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d(frag, "cancelled")
-            }
-        })
-    }
-
 
     override fun onDetach() {
         super.onDetach()
@@ -140,12 +131,3 @@ class ProjectsFragment : Fragment() {
 
 }
 
-class ProjectItem(val project: Project?): Item<ViewHolder>() {
-    override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.textView2.text = project?.name
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.project_list_item
-    }
-}

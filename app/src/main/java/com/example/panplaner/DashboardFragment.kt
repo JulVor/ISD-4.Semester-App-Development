@@ -13,6 +13,8 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.deadline_list_item.view.*
+import kotlinx.android.synthetic.main.fragment_dashboard.*
+import android.util.Log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,15 +30,23 @@ private const val ARG_PARAM2 = "param2"
  */
 class DashboardFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-
+    val frag = "DashboardFragment"
+    private var name: String? = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        name = arguments?.getString("name")
+        Log.d(frag, "$name")
+
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        textName.text = name
+    }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
@@ -51,10 +61,12 @@ class DashboardFragment : Fragment() {
         listener = null
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+    }
+
     private fun getProject(position: Int) {
-        val adapter = GroupAdapter<ViewHolder>()
-        val ref = FirebaseDatabase.getInstance().getReference("/Projects")
-            .child("${FirebaseAuth.getInstance().uid}").child("$position")
 
     }
     /**

@@ -3,12 +3,14 @@
 
     <item
             android:id="@+id/navigation_dashboard"
+            android:actionLayout="@layout/fragment_dashboard"
             android:icon="@drawable/ic_dashboard_black_24dp"
             android:title="@string/title_dashboard"/>
 
 
     <item
             android:id="@+id/navigation_notifications"
+            android:actionLayout="@layout/fragment_chat"
             android:icon="@drawable/ic_baseline_message_24px"
             android:title="Chat"/>
     <item
