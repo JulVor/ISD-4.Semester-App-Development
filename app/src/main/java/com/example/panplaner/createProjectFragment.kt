@@ -46,7 +46,7 @@ class createProjectFragment : Fragment() {
         val project = Project(uID, user, editTextProjectName.text.toString(), editDeadline.text.toString(), editTextUser.text.toString())
         ref.setValue(project)
             .addOnSuccessListener {
-                Log.d(frag, "Project created")
+                Log.d(frag, "project created")
             }
     }
     // TODO: Rename method, update argument and hook method into UI event
