@@ -10,10 +10,12 @@ import android.util.Log
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
+import android.content.Context
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user.*
 
 class UserActivity(obj: Project?) : AppCompatActivity() {
@@ -36,10 +38,12 @@ class UserActivity(obj: Project?) : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                replaceFragment(ChatFragment())
+                val intent = Intent(this, ChatActivity::class.java)
+                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dokumente -> {
+                replaceFragment(DocumentsFragment())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -65,9 +69,6 @@ class UserActivity(obj: Project?) : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_top_new_project -> {
-                replaceFragment(createProjectFragment())
-             }
             R.id.menu_top_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, MainActivity::class.java)

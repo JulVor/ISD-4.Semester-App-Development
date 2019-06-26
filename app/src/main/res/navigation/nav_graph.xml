@@ -22,7 +22,9 @@
     <fragment android:id="@+id/chatFragment" android:name="com.example.panplaner.ChatFragment"
               android:label="fragment_chat" tools:layout="@layout/fragment_chat"/>
     <fragment android:id="@+id/dashboardFragment" android:name="com.example.panplaner.DashboardFragment"
-              android:label="fragment_dashboard" tools:layout="@layout/fragment_dashboard"/>
+              android:label="fragment_dashboard" tools:layout="@layout/fragment_dashboard">
+        <action android:id="@+id/action_dashboardFragment_to_chatActivity" app:destination="@id/chatActivity"/>
+    </fragment>
     <fragment android:id="@+id/projectsFragment" android:name="com.example.panplaner.ProjectsFragment"
               android:label="fragment_projects" tools:layout="@layout/fragment_projects">
         <action android:id="@+id/action_projectsFragment_to_createProjectFragment"
@@ -34,4 +36,6 @@
         <action android:id="@+id/action_createProjectFragment_to_projectsFragment"
                 app:destination="@id/projectsFragment"/>
     </fragment>
+    <activity android:id="@+id/chatActivity" android:name="com.example.panplaner.ChatActivity"
+              android:label="activity_chat" tools:layout="@layout/activity_chat"/>
 </navigation>
