@@ -8,7 +8,7 @@
                                                    android:background="@color/colorPrimaryDark">
     <EditText
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/editTextProjectName" android:hint="@string/textProjectName" android:layout_marginTop="32dp"
@@ -19,7 +19,7 @@
     <EditText
             android:layout_width="0dp"
             android:paddingLeft="20dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/editTextUser"
@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="@+id/editTextProjectName" android:background="@drawable/rounded_edit_text"/>
     <EditText
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:inputType="date"
             android:ems="10"
             android:paddingLeft="20dp"

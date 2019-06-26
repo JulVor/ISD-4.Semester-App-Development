@@ -82,7 +82,9 @@ class ProjectsFragment : Fragment() {
                     override fun onDataChange(p0: DataSnapshot) {
                         Log.d(frag, "$p0")
                         p0.children.forEach{
+                            Log.d(frag, "getting data..")
                             val project = it.getValue(Project::class.java)
+                            Log.d(frag, project.toString())
                             adapter.add(ProjectItem(project))
                             setOnItemClickListener(onItemClick)
                         }
