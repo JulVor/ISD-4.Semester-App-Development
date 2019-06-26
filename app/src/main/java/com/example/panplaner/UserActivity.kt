@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_user.*
 
 class UserActivity : AppCompatActivity() {
@@ -33,13 +34,9 @@ class UserActivity : AppCompatActivity() {
                 changeFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
-                val fragment = ChatFragment()
-                changeFragment(fragment)
-                return@OnNavigationItemSelectedListener true
-            }
             R.id.navigation_dokumente -> {
-
+                val intent = Intent(this, ChatActivity::class.java)
+                startActivity(intent)
                 return@OnNavigationItemSelectedListener true
             }
         }

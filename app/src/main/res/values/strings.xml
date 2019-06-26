@@ -17,4 +17,6 @@
     <string name="button_delete">Delete</string>
     <string name="label_dashboard_deadline">Next Deadline</string>
     <string name="label_dashboard_members">Members</string>
+    <string name="text_chat_hint">Type here...</string>
+    <string name="button_chat">Chat</string>
 </resources>

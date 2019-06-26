@@ -1,6 +1,7 @@
 package com.example.panplaner
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.xwray.groupie.Item
 import kotlinx.android.synthetic.main.deadline_list_item.view.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import android.util.Log
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,13 +45,17 @@ class DashboardFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        textName.text = name
-    }
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        button_chat.setOnClickListener {
+            val intent = Intent(context, ChatActivity()::class.java)
+            startActivity(intent);
+        }
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onAttach(context: Context) {
