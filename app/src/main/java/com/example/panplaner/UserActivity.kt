@@ -28,6 +28,7 @@ class UserActivity : AppCompatActivity() {
 
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        Log.d(frag, item.itemId.toString())
         when (item.itemId) {
             R.id.navigation_dashboard -> {
                 val fragment = DashboardFragment()
@@ -43,22 +44,30 @@ class UserActivity : AppCompatActivity() {
         false
     }
 
-    private fun changeFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment, fragment.tag)
-            .addToBackStack(fragment.tag)
-            .commit()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         auth = FirebaseAuth.getInstance()
         checkForUser()
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navView = findViewById(R.id.nav_view) as BottomNavigationView
         database = FirebaseDatabase.getInstance()
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        val fragment = DashboardFragment()
+        val project =  intent.getParcelableExtra<Project>(ProjectsFragment.PROJECT_KEY)
+        Log.d(frag, project.toString())
+        supportActionBar?.title = project.name
+        val bundle = Bundle()
+        bundle.putString("projectID", project.uid)
+        bundle.putString("projectName", project.name)
+        fragment.arguments = bundle
+        changeFragment(fragment)
+    }
 
+
+    private fun putProjectToDashboard(){
+
+
+        /*
         var projectName = intent.getStringExtra("projectName")
         var projectDeadline = intent.getStringExtra("projectDeadline")
         var projectUsers = intent.getStringExtra("projectUsers")
@@ -74,13 +83,23 @@ class UserActivity : AppCompatActivity() {
         project.putString("uid", "$projectUid")
         var dfrag = DashboardFragment()
         dfrag.arguments = project
-        changeFragment(dfrag)
+        changeFragment(dfrag)*/
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_top, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
+
+    private fun changeFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment, fragment.javaClass.simpleName)
+            .addToBackStack(fragment.javaClass.simpleName)
+            .commit()
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

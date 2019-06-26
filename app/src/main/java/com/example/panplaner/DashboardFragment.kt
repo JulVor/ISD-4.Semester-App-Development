@@ -33,17 +33,20 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(frag, "onCreateView")
         // Inflate the layout for this fragment
-        name = arguments?.getString("name")
-        projectUid = arguments?.getString("uid")
-        Log.d(frag, "$name")
-        val auth = FirebaseAuth.getInstance().uid
-        Log.d(frag, auth)
-        Log.d(frag, projectUid)
-        var data = getProject()
-        Log.d(frag, data.toString()
-        )
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d(frag, "onCreate")
+        name = arguments?.getString("projectName")
+        projectUid = arguments?.getString("projectID")
+        Log.d(frag, name)
+        Log.d(frag, projectUid)
+        val auth = FirebaseAuth.getInstance().uid
+        var data = getProject()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -52,12 +55,13 @@ class DashboardFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         button_chat.setOnClickListener {
             val intent = Intent(context, ChatActivity()::class.java)
             intent.putExtra("projectID", projectUid)
-            startActivity(intent);
+            intent.putExtra("projectName", name)
+            startActivity(intent)
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onAttach(context: Context) {
@@ -75,10 +79,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun getProject() {
-<<<<<<< HEAD
-=======
-
->>>>>>> b3716cb751a4da45b3c8073253ec6f829b2b601b
+        Log.d(frag, "getProject")
         var ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}").child(projectUid.toString()).child("users")
         Log.d(frag, "$ref")
         recyclerView.apply {

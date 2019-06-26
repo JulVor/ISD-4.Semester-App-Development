@@ -72,6 +72,10 @@ class ProjectsFragment : Fragment() {
 
     }
 
+    companion object {
+        val PROJECT_KEY = "PROJECT_KEY"
+    }
+
     private fun loadProjects(){
         rv_projects.apply {
             layoutManager = LinearLayoutManager(this@ProjectsFragment.context)
@@ -86,7 +90,12 @@ class ProjectsFragment : Fragment() {
                             val project = it.getValue(Project::class.java)
                             Log.d(frag, project.toString())
                             adapter.add(ProjectItem(project))
-                            setOnItemClickListener(onItemClick)
+                        }
+                        adapter.setOnItemClickListener { item, view ->
+                            val projectItem = item as ProjectItem
+                            val intent = Intent(activity, UserActivity::class.java)
+                            intent.putExtra(PROJECT_KEY, projectItem.project)
+                            startActivity(intent)
                         }
                         rv_projects.adapter = adapter
                     }
