@@ -32,6 +32,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class DashboardFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
+
     val frag = "DashboardFragment"
     private var name: String? = ""
     override fun onCreateView(
@@ -40,8 +41,10 @@ class DashboardFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         name = arguments?.getString("name")
+        projectUid = arguments?.getString("")
         Log.d(frag, "$name")
-
+        val auth = FirebaseAuth.getInstance().uid
+        Log.d(frag, auth)
         return inflater.inflate(R.layout.fragment_dashboard, container, false)
     }
 
@@ -72,8 +75,8 @@ class DashboardFragment : Fragment() {
 
     }
 
-    private fun getProject(position: Int) {
-
+    private fun getProject() {
+        var ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}").child()
     }
     /**
      * This interface must be implemented by activities that contain this

@@ -35,8 +35,8 @@ class UserActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dokumente -> {
-                val intent = Intent(this, ChatActivity::class.java)
-                startActivity(intent)
+                val fragment = DocumentsFragment()
+                changeFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -84,9 +84,6 @@ class UserActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_top_new_project -> {
-                changeFragment(createProjectFragment())
-             }
             R.id.menu_top_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
                 val intent = Intent(this, MainActivity::class.java)

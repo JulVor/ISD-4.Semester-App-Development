@@ -16,8 +16,6 @@
     <argument
             android:name="emailFromSignUp"
             app:argType="string"/>
-    <fragment android:id="@+id/chatFragment" android:name="com.example.panplaner.ChatFragment"
-              android:label="fragment_chat" tools:layout="@layout/fragment_chat"/>
     <fragment android:id="@+id/dashboardFragment" android:name="com.example.panplaner.DashboardFragment"
               android:label="fragment_dashboard" tools:layout="@layout/fragment_dashboard">
         <action android:id="@+id/action_dashboardFragment_to_chatActivity" app:destination="@id/chatActivity"/>
@@ -33,16 +31,15 @@
         <action android:id="@+id/action_createProjectFragment_to_projectsFragment"
                 app:destination="@id/projectsFragment"/>
     </fragment>
-<<<<<<< HEAD
+
     <navigation android:id="@+id/user_nav_graph" app:startDestination="@id/userActivity">
         <activity android:id="@+id/userActivity" android:name="com.example.panplaner.UserActivity"
                       android:label="activity_user" tools:layout="@layout/activity_user" app:data="user"
                       app:action="loginToUserActivity"/>
         <action android:id="@+id/action_global_dashboardFragment" app:destination="@id/dashboardFragment"/>
-        <action android:id="@+id/action_global_chatFragment" app:destination="@id/chatFragment"/>
+
     </navigation>
-=======
+
     <activity android:id="@+id/chatActivity" android:name="com.example.panplaner.ChatActivity"
               android:label="activity_chat" tools:layout="@layout/activity_chat"/>
->>>>>>> 4911140bcd602d45d652e3e3bba4236de4b1323a
 </navigation>

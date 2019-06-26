@@ -45,6 +45,9 @@ class DocumentsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_documents, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
