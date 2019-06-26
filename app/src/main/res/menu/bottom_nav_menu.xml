@@ -8,6 +8,7 @@
             android:title="@string/title_dashboard"/>
     <item
             android:id="@+id/navigation_dokumente"
+            android:actionLayout="@layout/fragment_documents"
             android:icon="@drawable/ic_baseline_description_24px"
             android:title="Documents"/>
 

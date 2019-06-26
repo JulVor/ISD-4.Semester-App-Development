@@ -12,7 +12,7 @@
             android:layout_height="40dp"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText3" android:layout_marginBottom="8dp"
+            android:id="@+id/messageChat" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toStartOf="@+id/send_button_chat"/>
@@ -21,14 +21,14 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/send_button_chat"
-            app:layout_constraintTop_toTopOf="@+id/editText3"
-            app:layout_constraintBottom_toBottomOf="@+id/editText3"
+            app:layout_constraintTop_toTopOf="@+id/messageChat"
+            app:layout_constraintBottom_toBottomOf="@+id/messageChat"
             android:src="@android:drawable/ic_media_play" android:backgroundTint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_height="0dp" android:layout_marginBottom="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/editText3" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/messageChat" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="0dp"

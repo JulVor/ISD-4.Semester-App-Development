@@ -37,9 +37,12 @@
                       android:label="activity_user" tools:layout="@layout/activity_user" app:data="user"
                       app:action="loginToUserActivity"/>
         <action android:id="@+id/action_global_dashboardFragment" app:destination="@id/dashboardFragment"/>
+        <action android:id="@+id/action_global_documentsFragment" app:destination="@id/documentsFragment"/>
 
     </navigation>
 
     <activity android:id="@+id/chatActivity" android:name="com.example.panplaner.ChatActivity"
               android:label="activity_chat" tools:layout="@layout/activity_chat"/>
+    <fragment android:id="@+id/documentsFragment" android:name="com.example.panplaner.DocumentsFragment"
+              android:label="fragment_documents" tools:layout="@layout/fragment_documents"/>
 </navigation>
