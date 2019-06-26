@@ -75,6 +75,10 @@ class DashboardFragment : Fragment() {
     }
 
     private fun getProject() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> b3716cb751a4da45b3c8073253ec6f829b2b601b
         var ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}").child(projectUid.toString()).child("users")
         Log.d(frag, "$ref")
         recyclerView.apply {
