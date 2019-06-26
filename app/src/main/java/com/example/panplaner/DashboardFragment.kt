@@ -27,7 +27,6 @@ class DashboardFragment : Fragment() {
     private var projectUid: String? = ""
     val frag = "DashboardFragment"
     private var name: String? = ""
-    private var projectUid: String? = ""
     private var mproject: String? = ""
 
     override fun onCreateView(
@@ -75,9 +74,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun getProject() {
-<<<<<<< HEAD
-        var ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}").child(projectUid.toString())
-=======
+
         var ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}").child(projectUid.toString()).child("users")
         Log.d(frag, "$ref")
         recyclerView.apply {
@@ -99,7 +96,6 @@ class DashboardFragment : Fragment() {
                 })
             }
         }
->>>>>>> 4c8452cd3508bddde19fa0b4c439345228e22d39
     }
     /**
      * This interface must be implemented by activities that contain this
