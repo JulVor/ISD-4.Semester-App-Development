@@ -32,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class DashboardFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-
+    private var projectUid: String? = ""
     val frag = "DashboardFragment"
     private var name: String? = ""
     override fun onCreateView(
@@ -76,7 +76,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun getProject() {
-        var ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}").child()
+        var ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}").child(projectUid.toString())
     }
     /**
      * This interface must be implemented by activities that contain this
