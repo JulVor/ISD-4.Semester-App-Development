@@ -41,12 +41,8 @@ class DashboardFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(frag, "onCreate")
-        name = arguments?.getString("projectName")
-        projectUid = arguments?.getString("projectID")
-        Log.d(frag, name)
-        Log.d(frag, projectUid)
         val auth = FirebaseAuth.getInstance().uid
-        var data = getProject()
+        //var data = getProject()
     }
 
     // TODO: Rename method, update argument and hook method into UI event
