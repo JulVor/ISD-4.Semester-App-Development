@@ -61,6 +61,7 @@ class ChatActivity : AppCompatActivity() {
             val ref = FirebaseDatabase.getInstance().getReference("/Messages").child(projectID)
             adapter.apply {
                 ref.addChildEventListener(object : ChildEventListener {
+
                     override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                         val message = p0.getValue(Message::class.java)
                         if(message != null){
@@ -87,6 +88,7 @@ class ChatActivity : AppCompatActivity() {
 class ChatFromItem(val message: Message?): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_from_row.text = message?.message.toString()
+        viewHolder.itemView.textView_from_row_user.text = message?.sendFrom.toString()
     }
 
     override fun getLayout(): Int {

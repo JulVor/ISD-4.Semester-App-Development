@@ -10,6 +10,7 @@
             android:minWidth="150dp"
             android:maxWidth="240dp"
             android:padding="16dp"
+            android:textSize="14dp"
             android:background="@drawable/rounded_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,10 +21,11 @@
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.0"/>
     <TextView
             android:text="@string/hintUsername"
+            android:textSize="14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:id="@+id/textView"
+            android:id="@+id/textView_from_row_user"
             android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="@+id/textview_from_row"
             app:layout_constraintTop_toTopOf="@+id/textview_from_row"
