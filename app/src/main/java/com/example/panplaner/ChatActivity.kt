@@ -43,13 +43,16 @@ class ChatActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().uid ?: ""
         val projectID = intent.getStringExtra("projectID")
         val uid = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Messages/$projectID/$uid")
-        val message = Message(projectID, user, messageChat.text.toString(), System.currentTimeMillis() / 1000)
-        ref.setValue(message)
-            .addOnSuccessListener {
-                Log.d(frag, "message send")
-                messageChat.text.clear()
-            }
+        val ref = FirebaseDatabase.getInstance().getReference("/Messages/$projectID").push()
+        if(messageChat.text.toString() != "") {
+            val message = Message(projectID, user, messageChat.text.toString(), System.currentTimeMillis() / 1000)
+            ref.setValue(message)
+                .addOnSuccessListener {
+                    Log.d(frag, "message send")
+                    messageChat.text.clear()
+                }
+        }
+
     }
 
     private fun listenForMessages(){
@@ -62,7 +65,11 @@ class ChatActivity : AppCompatActivity() {
                         val message = p0.getValue(Message::class.java)
                         if(message != null){
                             Log.d(TAG, message?.message.toString())
-                            //adapter.add(MessageItem(message))
+                            if(message.sendFrom == FirebaseAuth.getInstance().uid){
+                                adapter.add(ChatToItem(message))
+                            } else {
+                                adapter.add(ChatFromItem(message))
+                            }
                         }
                         recyclerview_chat.adapter = adapter
                     }

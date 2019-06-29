@@ -7,6 +7,7 @@
 
     <TextView
             android:text="Hallo ich bin ein Test Text und will sehen wie ich aussehe"
+            android:minWidth="150dp"
             android:maxWidth="240dp"
             android:padding="16dp"
             android:background="@drawable/rounded_edit_text"
@@ -24,6 +25,7 @@
             android:textStyle="bold"
             android:id="@+id/textView"
             android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="@+id/textview_from_row" app:layout_constraintTop_toTopOf="@+id/textview_from_row"
+            app:layout_constraintStart_toStartOf="@+id/textview_from_row"
+            app:layout_constraintTop_toTopOf="@+id/textview_from_row"
             android:visibility="visible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
