@@ -27,12 +27,14 @@ class ChatActivity : AppCompatActivity() {
     }
     val adapter = GroupAdapter<ViewHolder>()
     val frag = "ChatActivity"
+    var projectID: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
         val projectName = intent.getStringExtra("projectName")
         supportActionBar?.title = projectName
+        projectID = intent.getStringExtra("projectID")
         listenForMessages()
         send_button_chat.setOnClickListener {
             saveMessageToDatabase()
@@ -41,12 +43,11 @@ class ChatActivity : AppCompatActivity() {
 
     private fun saveMessageToDatabase() {
         val user = FirebaseAuth.getInstance().uid ?: ""
-        val username = FirebaseDatabase.getInstance().getReference("/users/$user").child()
-        val projectID = intent.getStringExtra("projectID")
-        val uid = UUID.randomUUID().toString()
+        Log.d(frag, "sending")
+        Log.d(frag, projectID)
         val ref = FirebaseDatabase.getInstance().getReference("/Messages/$projectID").push()
+        Log.d(frag, ref.toString())
         if(messageChat.text.toString() != "") {
-            Log.d(frag, username.toString())
             val message = Message(projectID, user, messageChat.text.toString(), System.currentTimeMillis() / 1000)
             ref.setValue(message)
                 .addOnSuccessListener {

@@ -42,6 +42,7 @@ class DashboardFragment : Fragment() {
         super.onCreate(savedInstanceState)
         Log.d(frag, "onCreate")
         val auth = FirebaseAuth.getInstance().uid
+        projectUid = arguments!!.getString("projectID")
         //var data = getProject()
     }
 
@@ -54,6 +55,7 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         button_chat.setOnClickListener {
             val intent = Intent(context, ChatActivity()::class.java)
+            Log.d(frag, projectUid)
             intent.putExtra("projectID", projectUid)
             intent.putExtra("projectName", name)
             startActivity(intent)
