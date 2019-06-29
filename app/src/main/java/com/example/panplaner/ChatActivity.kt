@@ -41,10 +41,12 @@ class ChatActivity : AppCompatActivity() {
 
     private fun saveMessageToDatabase() {
         val user = FirebaseAuth.getInstance().uid ?: ""
+        val username = FirebaseDatabase.getInstance().getReference("/users/$user").child()
         val projectID = intent.getStringExtra("projectID")
         val uid = UUID.randomUUID().toString()
         val ref = FirebaseDatabase.getInstance().getReference("/Messages/$projectID").push()
         if(messageChat.text.toString() != "") {
+            Log.d(frag, username.toString())
             val message = Message(projectID, user, messageChat.text.toString(), System.currentTimeMillis() / 1000)
             ref.setValue(message)
                 .addOnSuccessListener {

@@ -121,7 +121,7 @@ class SignUpFragment : Fragment() {
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
 
-        val user = User(uid, editTextEmailSignUp.text.toString())
+        val user = User(uid, editTextUsernameSignUp.text.toString())
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(frag, "User saved to db!")
