@@ -43,12 +43,13 @@ class ChatActivity : AppCompatActivity() {
 
     private fun saveMessageToDatabase() {
         val user = FirebaseAuth.getInstance().uid ?: ""
+        val username = "Hans"
         Log.d(frag, "sending")
         Log.d(frag, projectID)
         val ref = FirebaseDatabase.getInstance().getReference("/Messages/$projectID").push()
         Log.d(frag, ref.toString())
         if(messageChat.text.toString() != "") {
-            val message = Message(projectID, user, messageChat.text.toString(), System.currentTimeMillis() / 1000)
+            val message = Message(projectID, user, username, messageChat.text.toString(), System.currentTimeMillis() / 1000)
             ref.setValue(message)
                 .addOnSuccessListener {
                     Log.d(frag, "message send")
@@ -69,7 +70,7 @@ class ChatActivity : AppCompatActivity() {
                         val message = p0.getValue(Message::class.java)
                         if(message != null){
                             Log.d(TAG, message?.message.toString())
-                            if(message.sendFrom == FirebaseAuth.getInstance().uid){
+                            if(message.sendFromId == FirebaseAuth.getInstance().uid){
                                 adapter.add(ChatToItem(message))
                             } else {
                                 adapter.add(ChatFromItem(message))
@@ -91,7 +92,7 @@ class ChatActivity : AppCompatActivity() {
 class ChatFromItem(val message: Message?): Item<ViewHolder>() {
     override fun bind(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemView.textview_from_row.text = message?.message.toString()
-        viewHolder.itemView.textView_from_row_user.text = message?.sendFrom.toString()
+        viewHolder.itemView.textView_from_row_user.text = message?.sendFromName.toString()
     }
 
     override fun getLayout(): Int {
