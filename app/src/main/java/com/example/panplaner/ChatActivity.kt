@@ -61,6 +61,7 @@ class ChatActivity : AppCompatActivity() {
             val ref = FirebaseDatabase.getInstance().getReference("/Messages").child(projectID)
             adapter.apply {
                 ref.addChildEventListener(object : ChildEventListener {
+
                     override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                         val message = p0.getValue(Message::class.java)
                         if(message != null){
