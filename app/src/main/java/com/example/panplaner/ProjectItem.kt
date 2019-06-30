@@ -22,7 +22,7 @@ class ProjectItem(val project: Project?): Item<ViewHolder>(), Parcelable {
         parcel.writeString(project?.creator)
         parcel.writeString(project?.name)
         parcel.writeString(project?.deadline)
-        parcel.writeString(project?.users)
+
     }
 
     override fun describeContents(): Int {

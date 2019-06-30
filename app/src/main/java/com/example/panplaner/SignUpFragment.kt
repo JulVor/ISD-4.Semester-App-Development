@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SignUpFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
@@ -64,26 +65,31 @@ class SignUpFragment : Fragment() {
     }
 
     private fun registerUser() {
+        Log.d(frag, "register user...")
         val email = editTextEmailSignUp.text.toString()
         val password = editTextPasswordSignUp.text.toString()
         val username = editTextUsernameSignUp.text.toString()
         if(username.isEmpty() || email.isEmpty() || password.isEmpty()){
+            Log.d(frag, "denied")
             Toast.makeText(activity, "Enter Username, Email and Password", Toast.LENGTH_SHORT).show()
             return
-        }
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(frag, "createUserWithEmail: success")
-                    val user = auth.currentUser
-                    Log.d(frag, user.toString())
-                    //uploadImageToStorage()
-                    saveUserToDatabase()
-                    findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
-                } else {
-                    Log.w(frag, "createUserWithEmail: failure", task.exception)
+        }else {
+            Log.d(frag, "else block")
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    Log.d(frag, task.toString())
+                    if (task.isSuccessful) {
+                        Log.d(frag, "createUserWithEmail: success")
+                        val user = auth.currentUser
+                        Log.d(frag, user.toString())
+                        //uploadImageToStorage()
+                        saveUserToDatabase()
+                        findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
+                    } else {
+                        Log.w(frag, "createUserWithEmail: failure", task.exception)
+                    }
                 }
-            }
+        }
 
     }
 
@@ -120,8 +126,8 @@ class SignUpFragment : Fragment() {
     private fun saveUserToDatabase() {
         val uid = FirebaseAuth.getInstance().uid ?: ""
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-
-        val user = User(uid, editTextUsernameSignUp.text.toString())
+        val projects = ArrayList<String>()
+        val user = User(uid, editTextUsernameSignUp.text.toString(), projects)
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(frag, "User saved to db!")
@@ -216,4 +222,4 @@ class SignUpFragment : Fragment() {
 
 }
 
-class User(val uid: String, val username: String)
+class User(val uid: String, val username: String, val projects: ArrayList<String>)

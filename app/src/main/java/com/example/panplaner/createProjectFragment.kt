@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_create_project.*
 import java.util.*
+import kotlin.collections.HashMap
 
 class createProjectFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
@@ -42,11 +43,18 @@ class createProjectFragment : Fragment() {
     private fun saveProjectToDatabase() {
         val user = FirebaseAuth.getInstance().uid ?: ""
         val uID = UUID.randomUUID().toString()
-        val ref = FirebaseDatabase.getInstance().getReference("/Projects/$user/$uID")
-        val project = Project(uID, user, editTextProjectName.text.toString(), editDeadline.text.toString(), editTextUser.text.toString())
-        ref.setValue(project)
+        val refP = FirebaseDatabase.getInstance().getReference("/Projects/$user/$uID")
+        val refU = FirebaseDatabase.getInstance().getReference("/users/$user/projects").push()
+        val hashmap = HashMap<String, String>()
+        hashmap.put("member", editTextUser.text.toString())
+        val project = Project(uID, user, editTextProjectName.text.toString(), editDeadline.text.toString(), hashmap)
+        refP.setValue(project)
             .addOnSuccessListener {
                 Log.d(frag, "project created")
+            }
+        refU.setValue(uID)
+            .addOnSuccessListener {
+                Log.d(frag, "project $uID pushed to $user projetcs.")
             }
     }
     // TODO: Rename method, update argument and hook method into UI event

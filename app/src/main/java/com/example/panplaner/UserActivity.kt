@@ -10,6 +10,9 @@ import android.util.Log
 import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.NavHost
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.database.FirebaseDatabase
 
 class UserActivity : AppCompatActivity() {
@@ -18,12 +21,13 @@ class UserActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private var projectID: String = ""
+    private var projectCreator: String =""
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         Log.d(frag, item.itemId.toString())
         when (item.itemId) {
             R.id.navigation_dashboard -> {
-                changeFragment(DashboardFragment(projectID))
+                changeFragment(DashboardFragment(projectID, projectCreator))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dokumente -> {
@@ -39,20 +43,20 @@ class UserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user)
         val navView = findViewById(R.id.nav_view) as BottomNavigationView
         auth = FirebaseAuth.getInstance()
-        checkForUser()
         database = FirebaseDatabase.getInstance()
+        checkForUser()
         val project =  intent.getParcelableExtra<Project>(ProjectsFragment.PROJECT_KEY)
         projectID = project.uid
-        Log.d(frag, projectID)
-        Log.d(frag, auth.uid)
-        val fragment = DashboardFragment(project.uid)
-        Log.d(frag, project.toString())
+        projectCreator = project.creator
         supportActionBar?.title = project.name
+        val fragment = DashboardFragment(project.uid, project.creator)
         val bundle = Bundle()
         bundle.putString("projectID", project.uid)
         bundle.putString("projectName", project.name)
+        bundle.putString("projectCreator", project.creator)
         fragment.arguments = bundle
-        changeFragment(fragment)
+        supportFragmentManager.beginTransaction().replace(R.id.navHostFrag, fragment).setPrimaryNavigationFragment(fragment).commit()
+        //changeFragment(fragment)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 
@@ -89,7 +93,7 @@ class UserActivity : AppCompatActivity() {
     private fun changeFragment(fragment: Fragment){
         Log.d(frag, "changing...")
         supportFragmentManager.beginTransaction()
-            .replace(R.id.view_holder_usera, fragment, fragment.tag)
+            .replace(R.id.navHostFrag, fragment, fragment.tag)
             .addToBackStack(fragment.tag)
             .commit()
     }

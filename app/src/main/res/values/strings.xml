@@ -5,6 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hintUsername">Username</string>
     <string name="hintEmail">Email</string>
+    <string name="buttonADD">Add</string>
     <string name="hintPassword">Password</string>
     <string name="textProjects">ProjectName</string>
     <string name="title_activity_user">UserActivity</string>
