@@ -17,13 +17,13 @@ class UserActivity : AppCompatActivity() {
     private lateinit var textMessage: TextView
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-
+    private var projectID: String = ""
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         Log.d(frag, item.itemId.toString())
         when (item.itemId) {
             R.id.navigation_dashboard -> {
-                changeFragment(DashboardFragment())
+                changeFragment(DashboardFragment(projectID))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dokumente -> {
@@ -41,8 +41,11 @@ class UserActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         checkForUser()
         database = FirebaseDatabase.getInstance()
-        val fragment = DashboardFragment()
         val project =  intent.getParcelableExtra<Project>(ProjectsFragment.PROJECT_KEY)
+        projectID = project.uid
+        Log.d(frag, projectID)
+        Log.d(frag, auth.uid)
+        val fragment = DashboardFragment(project.uid)
         Log.d(frag, project.toString())
         supportActionBar?.title = project.name
         val bundle = Bundle()

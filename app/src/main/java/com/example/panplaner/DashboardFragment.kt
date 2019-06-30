@@ -22,9 +22,9 @@ import com.example.panplaner.LogInFragment.OnFragmentInteractionListener
 import com.google.firebase.database.DatabaseError
 
 
-class DashboardFragment : Fragment() {
+class DashboardFragment(pid: String) : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-    private var projectUid: String? = ""
+    private var projectUid: String? = pid
     val frag = "DashboardFragment"
     private var name: String? = ""
     private var mproject: String? = ""
@@ -42,7 +42,7 @@ class DashboardFragment : Fragment() {
         super.onCreate(savedInstanceState)
         Log.d(frag, "onCreate")
         val auth = FirebaseAuth.getInstance().uid
-        projectUid = arguments!!.getString("projectID")
+        Log.d(frag, projectUid)
         //var data = getProject()
     }
 
