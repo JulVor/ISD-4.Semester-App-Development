@@ -18,11 +18,9 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="24dp"
             app:layout_constraintStart_toStartOf="parent" android:background="@drawable/rounded_edit_text"
-<<<<<<< HEAD
+
             android:hint="@string/hintEmail" android:text="ab@gmail.com"/>
-=======
-            android:hint="@string/hintEmail" android:text="g@gmail.com"/>
->>>>>>> 3dc5758ad5f0be63a0104a6cfbb82a2830b722c8
+
     <EditText
             android:layout_width="0dp"
             android:layout_height="50dp"
