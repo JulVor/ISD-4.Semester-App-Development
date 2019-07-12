@@ -94,6 +94,7 @@ class ChatActivity : AppCompatActivity() {
                             }
                         }
                         recyclerview_chat.adapter = adapter
+                        recyclerview_chat.scrollToPosition(adapter.itemCount - 1)
                     }
                     override fun onCancelled(p0: DatabaseError) {}
                     override fun onChildChanged(p0: DataSnapshot, p1: String?) {}

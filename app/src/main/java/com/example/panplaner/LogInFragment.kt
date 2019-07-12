@@ -71,7 +71,6 @@ class LogInFragment : Fragment() {
                     if(task.isSuccessful){
                         Log.d(frag, "success")
                         val user = auth.currentUser
-                        Log.d(frag, user?.uid)
                         val action = LogInFragmentDirections.actionLogInFragmentToProjectsFragment()
                         findNavController().navigate(action)
 

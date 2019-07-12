@@ -40,6 +40,7 @@ class ProjectsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         GlobalScope.launch(Dispatchers.Main){
             loadProjects()
+            getProjects()
         }
     }
 
@@ -82,43 +83,49 @@ class ProjectsFragment : Fragment() {
         val PROJECT_KEY = "PROJECT_KEY"
     }
 
-    suspend private fun loadProjects() {
-        val ref = FirebaseDatabase.getInstance().getReference("/users").child("${FirebaseAuth.getInstance().uid}").child("projects")
+    suspend private fun getProjects() {
+        val refP = FirebaseDatabase.getInstance().getReference("/users").child("${FirebaseAuth.getInstance().uid}").child("/projects")
         rv_projects.apply {
-            layoutManager = LinearLayoutManager(this@ProjectsFragment.context)
+            val adapter = GroupAdapter<ViewHolder>()
+            adapter.apply {
+                refP.addListenerForSingleValueEvent(object: ValueEventListener {
+                    override fun onDataChange(p0: DataSnapshot) {
+                        Log.d(frag, "$p0")
+                        p0.children.forEach {
+                            Log.d(frag, it.value.toString())
+                        }
+                    }
+                    override fun onCancelled(p0: DatabaseError) {}
+                })
+            }
+        }
+    }
+
+    suspend private fun loadProjects() {
+        val ref = FirebaseDatabase.getInstance().getReference("/Projects").child("${FirebaseAuth.getInstance().uid}")
+        rv_projects.apply {
             val adapter = GroupAdapter<ViewHolder>()
             adapter.apply {
                 ref.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(p0: DataSnapshot) {
                         Log.d(frag, "$p0")
                         p0.children.forEach {
-                            Log.d(frag, "getting data..")
-                            Log.d(frag, it.value.toString())
-                            val refP = FirebaseDatabase.getInstance().getReference("Projects").child("${it.value}")
-                            refP.addListenerForSingleValueEvent(object : ValueEventListener {
-                                override fun onDataChange(p0: DataSnapshot) {
-                                    p0.children.forEach {
-                                        Log.d(frag, "looking for project")
-                                        val project = it.getValue(Project::class.java)
-                                        adapter.add(ProjectItem(project))
-                                    }
-                                    adapter.setOnItemClickListener { item, view ->
-                                        val projectItem = item as ProjectItem
-                                        val intent = Intent(activity, UserActivity::class.java)
-                                        intent.putExtra(PROJECT_KEY, projectItem.project)
-                                        startActivity(intent)
-                                    }
-                                }
-                                override fun onCancelled(p0: DatabaseError) {
-                                }
-                            })
+                            Log.d(frag, "looking for project")
+                            val project = it.getValue(Project::class.java)
+                            adapter.add(ProjectItem(project))
+                            adapter.setOnItemClickListener { item, view ->
+                                val projectItem = item as ProjectItem
+                                val intent = Intent(activity, UserActivity::class.java)
+                                intent.putExtra(PROJECT_KEY, projectItem.project)
+                                startActivity(intent)
+                            }
                         }
+                        rv_projects.adapter = adapter
                     }
                     override fun onCancelled(p0: DatabaseError) {
                         Toast.makeText(activity, "somethin went wrong...", Toast.LENGTH_SHORT).show()
                     }
                 })
-                rv_projects.adapter = adapter
 
             }
         }

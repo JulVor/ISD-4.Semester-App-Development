@@ -70,6 +70,7 @@ class DashboardFragment(pid: String, creator: String) : Fragment() {
             if(usr != null){
                 GlobalScope.launch(Dispatchers.Main){
                     checkIfUserExists(usr)
+                    editTextAddUser.text.clear()
                 }
             }
             else{
